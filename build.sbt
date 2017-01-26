@@ -1,0 +1,16 @@
+lazy val root = (project in file("."))
+  .settings(
+    name         := "atbk-euler",
+    organization := "eu.atbk.euler",
+    scalaVersion := "2.11.8",
+    version      := "0.1.0-SNAPSHOT"
+  ).settings(
+    EclipseKeys.eclipseOutput := Some("target"),
+    EclipseKeys.executionEnvironment := Some(EclipseExecutionEnvironment.JavaSE18),
+    EclipseKeys.withSource := true,
+    EclipseKeys.withJavadoc := true,
+    EclipseKeys.withBundledScalaContainers := false,
+    crossPaths := false
+  ).settings(
+    scalacOptions ++= Seq("-Ybackend:GenBCode", "-Ydelambdafy:method", "-target:jvm-1.8","-Xexperimental")
+  )
