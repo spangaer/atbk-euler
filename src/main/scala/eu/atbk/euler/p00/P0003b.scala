@@ -1,6 +1,7 @@
 package eu.atbk.euler.p00
 
 import scala.annotation.tailrec
+import eu.atbk.euler.util.MyMath._
 
 object P0003b {
   def main(args: Array[String]) {
@@ -10,7 +11,7 @@ object P0003b {
 
     println(primeGenerator.takeWhile(_ < 100).toList)
 
-    println(primeDecompose(in))
+    println(P0003b.primeDecompose(in))
   }
 
   @tailrec
@@ -29,25 +30,4 @@ object P0003b {
     }
   }
 
-  def primeGenerator: Iterator[Long] = {
-    Stream
-      .iterate((2l, Seq(2l))) {
-        case (now, primes) =>
-          val next = now + 1
-          if (primes.exists(next % _ == 0)) {
-            // not a prime
-            (next, primes)
-          } else {
-            // prime
-            (next, primes :+ next)
-          }
-      }
-      .filter {
-        case (a, b) =>
-          // only keep primes in sequence
-          b.last == a
-      }
-      .map(_._1) // don't need to drag along state
-      .iterator
-  }
 }
