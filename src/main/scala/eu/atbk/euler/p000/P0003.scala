@@ -1,4 +1,4 @@
-package eu.atbk.euler.p00
+package eu.atbk.euler.p000
 
 import scala.annotation.tailrec
 import eu.atbk.euler.util.MyMath._

@@ -1,4 +1,4 @@
-package eu.atbk.euler.p00
+package eu.atbk.euler.p000
 
 object P0006 {
   def main(args: Array[String]) {
