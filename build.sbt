@@ -9,8 +9,8 @@ lazy val root = (project in file("."))
     EclipseKeys.executionEnvironment := Some(EclipseExecutionEnvironment.JavaSE18),
     EclipseKeys.withSource := true,
     EclipseKeys.withJavadoc := true,
-    EclipseKeys.withBundledScalaContainers := false,
+    //EclipseKeys.withBundledScalaContainers := false,
     crossPaths := false
   ).settings(
-    scalacOptions ++= Seq("-Ybackend:GenBCode", "-Ydelambdafy:method", "-target:jvm-1.8","-Xexperimental")
+    scalacOptions ++= Seq("-Ybackend:GenBCode", "-Ydelambdafy:method", "-target:jvm-1.8","-Xexperimental" ,"-unchecked", "-deprecation", "-encoding", "utf8","-feature")
   )

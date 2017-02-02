@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="scala.application">
+<listAttribute key="StepOutExcludePkgsOrClasses"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/atbk-euler/src/main/scala/eu/atbk/euler/p001/P0010.scala"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="eu.atbk.euler.p001.P0010"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="atbk-euler"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-server&#10;-XX:+UseG1GC&#10;-XX:+DoEscapeAnalysis&#10;-XX:+UseCompressedOops&#10;-XX:ReservedCodeCacheSize=512m&#10;-Xss2m&#10;-XX:CompileThreshold=1000&#10;-Xms1g&#10;-Xmx2g&#10;-Dsun.rmi.dgc.client.gcInterval=300000&#10;-Dsun.rmi.dgc.server.gcInterval=300000&#10;-Djava.rmi.dgc.leaseValue=300000&#10;-Dcom.sun.management.jmxremote"/>
+</launchConfiguration>
