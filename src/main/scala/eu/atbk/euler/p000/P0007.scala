@@ -7,7 +7,11 @@ object P0007 {
 
     println(P0007(6))
 
+    val start = System.currentTimeMillis()
     println(P0007(10001))
+    val end = System.currentTimeMillis()
+    println(end - start)
+
   }
 
   def apply(i: Int): Long = {

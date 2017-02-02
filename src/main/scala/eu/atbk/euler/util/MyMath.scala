@@ -1,23 +1,32 @@
 package eu.atbk.euler.util
 
 import scala.annotation.tailrec
+import scala.collection.GenSeq
 
 object MyMath {
+
   def primeGenerator: Iterator[Long] = {
     Stream
-      .iterate((2l, Seq(2l))) {
-        case (now, primes) =>
+      .iterate((2l, Seq(2l): GenSeq[Long], false)) {
+        case (now, primes, stop) =>
           val next = now + 1
-          if (primes.exists(next % _ == 0)) {
+          if (primes.takeWhile { p =>
+            val sq = p * p
+            sq > 0 && sq <= next
+          }.exists(next % _ == 0)) {
             // not a prime
-            (next, primes)
+            (next, primes, stop)
           } else {
             // prime
-            (next, primes :+ next)
+            (next, primes :+ next, next * next < 0)
           }
       }
+      .takeWhile {
+        case (_, _, stop) =>
+          !stop
+      }
       .filter {
-        case (a, b) =>
+        case (a, b, _) =>
           // only keep primes in sequence
           b.last == a
       }
