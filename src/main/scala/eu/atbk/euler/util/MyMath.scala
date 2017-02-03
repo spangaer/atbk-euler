@@ -69,4 +69,20 @@ object MyMath {
       }
     }
   }
+
+  val ONE = BigInt(1)
+
+  def fac(in: BigInt): BigInt = {
+    @tailrec
+    def facImpl(current: BigInt, prod: BigInt): BigInt = {
+      current match {
+        case ONE =>
+          prod
+        case other =>
+          facImpl(other - 1, prod * other)
+      }
+    }
+
+    facImpl(in, ONE)
+  }
 }
