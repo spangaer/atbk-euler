@@ -34,7 +34,7 @@ object MyMath {
       .iterator
   }
 
-  def sqrt(number: BigInt): BigInt = {
+  private def sqrt(number: BigInt): BigInt = {
     def next(n: BigInt, i: BigInt): BigInt = (n + i / n) >> 1
     val one = BigInt(1)
     val n = one
@@ -50,7 +50,7 @@ object MyMath {
     primeDecompose(number, sqrt(number) + 1)
 
   @tailrec
-  def primeDecompose(number: Long, limit: Long, current: Seq[Long] = Seq.empty, start: Long = 2, primes: Iterator[Long] = primeGenerator): Seq[Long] = {
+  private def primeDecompose(number: Long, limit: Long, current: Seq[Long] = Seq.empty, start: Long = 2, primes: Iterator[Long] = primeGenerator): Seq[Long] = {
 
     if (limit < start) { // the rest is prime
       if (number != 1)
