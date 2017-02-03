@@ -5,6 +5,7 @@ import java.nio.file.Paths
 import java.nio.charset.StandardCharsets
 import scala.collection.JavaConverters._
 import scala.collection.mutable.{ HashMap => MutHashMap }
+import eu.atbk.euler.util.MyIO
 
 /**
  * Also solves p67
@@ -40,15 +41,7 @@ object P0018 {
 
   }
 
-  def parseInput(data: String): Entry = {
-    val stringRows = data.split(Array('\r', '\n')).filterNot(_.isEmpty())
-
-    parseInput(stringRows)
-  }
-
-  def parseInput(stringRows: Seq[String]): Entry = {
-
-    val numberRows = stringRows.map(row => row.split(" ").filterNot(_.isEmpty()).map(java.lang.Long.parseLong(_)))
+  private def parseInput(numberRows: Seq[Seq[Long]]): Entry = {
 
     val bottomUp = numberRows.reverse
     val bottom = bottomUp.head.map(Entry(_, None))
@@ -59,16 +52,16 @@ object P0018 {
     top
   }
 
-  val input1 = parseInput {
-    """
+  val input1Raw = MyIO.string2NumberSeqSeq("""
 3
 7 4
 2 4 6
 8 5 9 3
-"""
-  }
-  val input2 = parseInput {
-    """
+""")
+
+  private val input1 = parseInput(input1Raw)
+
+  val input2Raw = MyIO.string2NumberSeqSeq("""
 75
 95 64
 17 47 82
@@ -84,22 +77,22 @@ object P0018 {
 91 71 52 38 17 14 91 43 58 50 27 29 48
 63 66 04 68 89 53 67 30 73 16 69 87 40 31
 04 62 98 27 23 09 70 98 73 93 38 53 60 04 23
-"""
-  }
+""")
 
-  def input3 = {
-    val stringRows = Files.readAllLines(Paths.get("data/p067_triangle.txt"), StandardCharsets.UTF_8).asScala
-    parseInput(stringRows)
-  }
+  private val input2 = parseInput(input2Raw)
 
+  def input3Raw = MyIO.file2NumberSeqSeq("data/p067_triangle.txt")
+
+  private def input3 = parseInput(input3Raw)
+
+  private case class Entry(value: Long, children: Option[(Entry, Entry)]) {
+
+    // use actualy ojbect equalty, each node in tree should only have one instance
+    // this way an entry is a good cache key for caching the max path underneath it
+
+    override def hashCode = System.identityHashCode(this)
+    override def equals(a: Any) = super.equals(a)
+
+  }
 }
 
-case class Entry(value: Long, children: Option[(Entry, Entry)]) {
-
-  // use actualy ojbect equalty, each node in tree should only have one instance
-  // this way an entry is a good cache key for caching the max path underneath it
-
-  override def hashCode = System.identityHashCode(this)
-  override def equals(a: Any) = super.equals(a)
-
-}
