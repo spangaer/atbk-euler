@@ -85,4 +85,10 @@ object MyMath {
 
     facImpl(in, ONE)
   }
+
+  def devidors(number: Long): Seq[Long] = {
+    val primedecomp = MyMath.primeDecompose(number)
+    val out = 1l +: ((1 until primedecomp.size).flatMap(i => primedecomp.combinations(i)).distinct.map(_.product))
+    out
+  }
 }

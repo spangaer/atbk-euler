@@ -15,13 +15,9 @@ object P0012 {
   def apply(i: Int): (Long, Long, Seq[Long]) = {
     triangleNumberGenerator.map {
       case (index, sum) =>
-        (index, sum, MyMath.primeDecompose(sum))
+        (index, sum, MyMath.devidors(sum))
     }
-      .map {
-        case (a, b, c) =>
-          val d = (1 until c.size).flatMap(i => c.combinations(i)).distinct.map(_.product)
-          (a, b, 1l +: d)
-      }
+
       .dropWhile {
         case (a, b, d) =>
           println(s"${(a, b, d.size)}")
