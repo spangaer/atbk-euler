@@ -24,10 +24,10 @@ object P0026 {
               val div = n / denominator
               val rem = n % denominator
 
-              fractionImpl(rem, state :+ (div, n))
+              fractionImpl(rem * 10, state :+ (div, n))
 
             } else {
-              fractionImpl(n * 10, state)
+              fractionImpl(n * 10, state :+ (0, n))
             }
           case (prefix, repeat) =>
             (prefix.map(_._1), Some(repeat.map(_._1)))
