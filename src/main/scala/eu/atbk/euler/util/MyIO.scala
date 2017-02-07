@@ -12,7 +12,11 @@ object MyIO {
   }
 
   def file2NumberSeqSeq(in: String): Seq[Seq[Long]] = {
-    Files.readAllLines(Paths.get(in), StandardCharsets.UTF_8).asScala
+    fileLines(in)
       .map(row => row.split(" ").filterNot(_.isEmpty()).map(java.lang.Long.parseLong(_)).toSeq).toSeq
+  }
+
+  def fileLines(in: String): Seq[String] = {
+    Files.readAllLines(Paths.get(in), StandardCharsets.UTF_8).asScala
   }
 }
