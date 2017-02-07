@@ -91,4 +91,17 @@ object MyMath {
     val out = 1l +: ((1 until primedecomp.size).flatMap(i => primedecomp.combinations(i)).distinct.map(_.product))
     out
   }
+
+  def fibGenerator: Iterator[(BigInt, Long)] = {
+    Stream.iterate((BigInt(1), BigInt(1), 1l)) {
+      case (a, b, i) => (b, a + b, i + 1)
+    }
+      .map {
+        case (a, b, i) => (a, i)
+      }.iterator
+  }
+
+  def power(x: Long, p: Int): Long = {
+    Stream.fill(p)(x).product
+  }
 }
