@@ -14,5 +14,6 @@ lazy val root = (project in file("."))
   ).settings(
     scalacOptions ++= Seq("-Ybackend:GenBCode", "-Ydelambdafy:method", "-target:jvm-1.8","-Xexperimental" ,"-unchecked", "-deprecation", "-encoding", "utf8","-feature")
   ).settings(
-  	libraryDependencies += "com.ibm.icu" % "icu4j" % "58.2"
+  	libraryDependencies += "com.ibm.icu" % "icu4j" % "58.2",
+  	libraryDependencies += "com.google.guava" % "guava" % "21.0"
   )

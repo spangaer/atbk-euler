@@ -70,6 +70,9 @@ object MyMath {
     }
   }
 
+  def isPrime(in: Long) =
+    in > 1 && primeDecompose(in).last == in
+
   val ONE = BigInt(1)
 
   def fac(in: BigInt): BigInt = {
