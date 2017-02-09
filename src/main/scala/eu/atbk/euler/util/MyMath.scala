@@ -73,12 +73,15 @@ object MyMath {
   def isPrime(in: Long) =
     in > 1 && primeDecompose(in).last == in
 
+  val ZERO = BigInt(0)
   val ONE = BigInt(1)
 
   def fac(in: BigInt): BigInt = {
     @tailrec
     def facImpl(current: BigInt, prod: BigInt): BigInt = {
       current match {
+        case ZERO =>
+          1
         case ONE =>
           prod
         case other =>
@@ -87,6 +90,22 @@ object MyMath {
     }
 
     facImpl(in, ONE)
+  }
+
+  def fac(in: Long): Long = {
+    @tailrec
+    def facImpl(current: Long, prod: Long): Long = {
+      current match {
+        case 0 =>
+          1
+        case 1 =>
+          prod
+        case other =>
+          facImpl(other - 1, prod * other)
+      }
+    }
+
+    facImpl(in, 1)
   }
 
   def devidors(number: Long): Seq[Long] = {
