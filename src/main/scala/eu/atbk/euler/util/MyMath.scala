@@ -2,6 +2,11 @@ package eu.atbk.euler.util
 
 import scala.annotation.tailrec
 import scala.collection.GenSeq
+import scala.collection.parallel.immutable.ParSeq
+import scala.collection.immutable.{ Seq => ISeq }
+import scala.collection.JavaConverters._
+import java.nio.file.Paths
+import java.nio.file.Files
 
 object MyMath {
 
@@ -32,6 +37,70 @@ object MyMath {
       }
       .map(_._1) // don't need to drag along state
       .iterator
+  }
+
+  lazy val primesBelow1million: Seq[Long] = {
+    val path = Paths.get("data/primes_to_1million.txt")
+
+    val fromFile: Option[Seq[Long]] = if (Files.exists(path)) {
+      try {
+        val temp = Files.readAllLines(path).asScala.filterNot(_.isEmpty()).map(x => java.lang.Long.parseLong(x)).to[ISeq]
+        val sum = temp.foldLeft(0l)(checkSum)
+
+        if (sum == 7308170383993554604l) {
+          Some(temp)
+        } else {
+          None
+        }
+
+      } catch {
+        case x: Exception =>
+          x.printStackTrace()
+          None
+      }
+    } else
+      None
+
+    fromFile match {
+      case Some(done) =>
+        done
+      case None =>
+        val limit = 1000 * 1000
+        val out = MyMath.primeGenerator.takeWhile(_ <= limit).map { p =>
+          println(p)
+          p
+        }.to[ISeq]
+
+        val sum = out.foldLeft(0l)(checkSum)
+
+        println(s"checksum ${sum}")
+
+        val stream = Files.newBufferedWriter(path)
+
+        try {
+          out.foldLeft(stream) {
+            case (stream, prime) =>
+              stream.write(prime.toString())
+              stream.newLine()
+              stream
+          }
+        } finally {
+          stream.close()
+        }
+
+        out
+    }
+  }
+
+  private def checkSum(sum: Long, add: Long): Long = {
+    rotate(sum, 15) ^ add
+  }
+
+  private def rotate(in: Long, bits: Long): Long = {
+    val left = Math.abs(bits) % 64
+    val right = 64 - left
+    val out = (in << left) | (in >>> right)
+    out
   }
 
   private def sqrt(number: BigInt): BigInt = {
@@ -125,5 +194,20 @@ object MyMath {
 
   def power(x: Long, p: Int): Long = {
     Stream.fill(p)(x).product
+  }
+
+  def digitSeqToNumber(in: Seq[Int]): Long =
+    in.foldLeft(0l) { case (current, next) => current * 10 + next }
+
+  def numberToDigitSeq(in: Long): Seq[Int] =
+    in.toString().toCharArray().map(x => Integer.parseInt("" + x))
+
+  def rotations[T](seq: Seq[T]): Seq[Seq[T]] = {
+    val out = (0 until seq.size).map { i =>
+      val (a, b) = seq.splitAt(i)
+      b ++ a
+    }
+
+    out
   }
 }

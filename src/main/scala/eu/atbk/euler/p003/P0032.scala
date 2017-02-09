@@ -1,6 +1,7 @@
 package eu.atbk.euler.p003
 
 import scala.collection.immutable.{ Seq => ISeq }
+import eu.atbk.euler.util.MyMath
 
 object P0032 {
 
@@ -33,7 +34,7 @@ object P0032 {
       }
       .map {
         case (a, b, c) =>
-          (a, b, seqToNumber(a) * seqToNumber(b), c)
+          (a, b, MyMath.digitSeqToNumber(a) * MyMath.digitSeqToNumber(b), c)
       }.filter {
         case (a, b, n, c) =>
           val test = n.toString().toCharArray().map { x => Integer.parseInt("" + x) }.sorted.to[ISeq]
@@ -48,8 +49,5 @@ object P0032 {
 
     println(out) //45228
   }
-
-  private def seqToNumber(in: Seq[Int]): Long =
-    in.foldLeft(0l) { case (current, next) => current * 10 + next }
 
 }

@@ -8,14 +8,13 @@ object P0034 {
     println(decimalFac(145)) // 145
 
     val out = boundedStream.filter(x => x == decimalFac(x)).sum
-    println(out)
+    println(out) // 40730
   }
 
   val facs = (0 to 9).map(MyMath.fac(_))
 
   private def decimalFac(in: Long): Long = {
-    in.toString().toCharArray()
-      .map(x => Integer.parseInt("" + x))
+    MyMath.numberToDigitSeq(in)
       .map(facs).sum
   }
 
