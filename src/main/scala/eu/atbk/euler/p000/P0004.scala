@@ -1,5 +1,7 @@
 package eu.atbk.euler.p000
 
+import eu.atbk.euler.util.MyText
+
 object P0004 {
   def main(args: Array[String]) {
 
@@ -20,9 +22,7 @@ object P0004 {
   }
 
   def isPalindrome(number: Long): Boolean = {
-    val digits = number.toString().toSeq
-
-    digits == digits.reverse
+    MyText.isPalindrome(number.toString())
   }
 
   def countDown = Stream.iterate(999l)(_ - 1)
