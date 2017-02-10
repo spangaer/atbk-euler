@@ -15,4 +15,10 @@ object MyText {
     val digits = in.map(x => Integer.parseInt("" + x)).to[ISeq].sorted
     digits == digits9
   }
+
+  val letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray().zipWithIndex.map { case (l, i) => (l, i + 1) }.toMap
+
+  def worth(in: String): Int = {
+    in.toCharArray().map(letters).sum
+  }
 }
