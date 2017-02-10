@@ -210,4 +210,7 @@ object MyMath {
 
     out
   }
+
+  def iterator(start: Long): Iterator[Long] =
+    Stream.iterate(start)(_ + 1).iterator
 }

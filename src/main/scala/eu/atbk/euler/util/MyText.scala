@@ -8,4 +8,11 @@ object MyText {
     val out = digits == digits.reverse
     out
   }
+
+  val digits9 = (1 to 9).to[ISeq]
+
+  def isPanDigtal9(in: String): Boolean = {
+    val digits = in.map(x => Integer.parseInt("" + x)).to[ISeq].sorted
+    digits == digits9
+  }
 }
