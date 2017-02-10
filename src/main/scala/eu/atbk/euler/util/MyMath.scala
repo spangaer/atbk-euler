@@ -4,6 +4,7 @@ import scala.annotation.tailrec
 import scala.collection.GenSeq
 import scala.collection.parallel.immutable.ParSeq
 import scala.collection.immutable.{ Seq => ISeq }
+import scala.collection.immutable.{ HashSet => IHashSet }
 import scala.collection.JavaConverters._
 import java.nio.file.Paths
 import java.nio.file.Files
@@ -39,7 +40,7 @@ object MyMath {
       .iterator
   }
 
-  private def sqrt(number: BigInt): BigInt = {
+  private def sqrt(number: BigInt): BigInt = { // this is cheat from here: https://issues.scala-lang.org/browse/SI-3739
     def next(n: BigInt, i: BigInt): BigInt = (n + i / n) >> 1
     val one = BigInt(1)
     val n = one
@@ -79,14 +80,33 @@ object MyMath {
     in > 1 && primeDecompose(in).last == in
 
   private val limit = power(10, 12)
+  private val milion = 1000 * 1000
 
   def isPrimeBelow10to12th(in: Long): Boolean = {
     if (in > limit) {
       throw new IllegalArgumentException(s"${in} is larger then $limit")
     }
 
-    !primesBelow1million.takeWhile(p => p * p <= in).exists(p => in % p == 0)
+    if (in <= milion) {
+      primesBelow1millionLookup.contains(in)
+    } else {
+      !primesBelow1million.takeWhile(p => p * p <= in).exists(p => in % p == 0)
+    }
   }
+
+  def primeDecompose10to12th(number: Long): Seq[Long] = {
+    if (number > limit) {
+      throw new IllegalArgumentException(s"${number} is larger then $limit")
+    }
+
+    if (number <= milion && primesBelow1millionLookup.contains(number)) {
+      Seq(number)
+    } else {
+      primeDecompose(number = number, limit = sqrt(number) + 1, primes = primesBelow1million.iterator)
+    }
+  }
+
+  lazy val primesBelow1millionLookup = primesBelow1million.to[IHashSet]
 
   lazy val primesBelow1million: Seq[Long] = {
     val path = Paths.get("data/primes_to_1million.txt")
