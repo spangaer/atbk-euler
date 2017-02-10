@@ -17,7 +17,7 @@ object P0039 {
     println(sol)
     println(sol.size)
     val (a, b, c) = sol(0)
-    println(a + b + c)
+    println(a + b + c) // 840
 
   }
 

@@ -14,7 +14,7 @@ object P0037 {
 
     println(out)
     println(out.size)
-    println(out.sum)
+    println(out.sum) //748317
 
   }
 

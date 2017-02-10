@@ -17,7 +17,7 @@ object P0036 {
 
     }.map(_.longValue()).sum
 
-    println(out)
+    println(out) // 872187
   }
 
   def stringify(in: Long): (String, String) = {

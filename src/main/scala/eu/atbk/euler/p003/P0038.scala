@@ -23,7 +23,7 @@ object P0038 {
 
     val out = dataset.foldLeft(None: Option[String])(findPandigital)
 
-    println(out)
+    println(out) // 932718654
   }
 
   private def findPandigital(winner: Option[String], factor: Int): Option[String] = {
