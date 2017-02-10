@@ -39,6 +39,55 @@ object MyMath {
       .iterator
   }
 
+  private def sqrt(number: BigInt): BigInt = {
+    def next(n: BigInt, i: BigInt): BigInt = (n + i / n) >> 1
+    val one = BigInt(1)
+    val n = one
+    val n1 = next(n, number)
+    def sqrtHelper(n: BigInt, n1: BigInt): BigInt = if ((n1 - n).abs <= one) List(n1, n).max else sqrtHelper(n1, next(n1, number))
+    sqrtHelper(n, n1)
+  }
+
+  def sqrt(number: Long): Long =
+    sqrt(BigInt(number)).longValue()
+
+  def primeDecompose(number: Long): Seq[Long] =
+    primeDecompose(number, sqrt(number) + 1)
+
+  @tailrec
+  private def primeDecompose(number: Long, limit: Long, current: Seq[Long] = Seq.empty, start: Long = 2, primes: Iterator[Long] = primeGenerator): Seq[Long] = {
+
+    if (limit < start) { // the rest is prime
+      if (number != 1)
+        current :+ number
+      else
+        current
+    } else {
+      val div = number / start
+      val rem = number - (start * div)
+      if (rem == 0) {
+        // 
+        val limit = sqrt(div) + 1
+        primeDecompose(div, limit, current :+ start, start, primes)
+      } else {
+        primeDecompose(number, limit, current, primes.next(), primes)
+      }
+    }
+  }
+
+  def isPrime(in: Long) =
+    in > 1 && primeDecompose(in).last == in
+
+  private val limit = power(10, 12)
+
+  def isPrimeBelow10to12th(in: Long): Boolean = {
+    if (in > limit) {
+      throw new IllegalArgumentException(s"${in} is larger then $limit")
+    }
+
+    !primesBelow1million.takeWhile(p => p * p <= in).exists(p => in % p == 0)
+  }
+
   lazy val primesBelow1million: Seq[Long] = {
     val path = Paths.get("data/primes_to_1million.txt")
 
@@ -102,45 +151,6 @@ object MyMath {
     val out = (in << left) | (in >>> right)
     out
   }
-
-  private def sqrt(number: BigInt): BigInt = {
-    def next(n: BigInt, i: BigInt): BigInt = (n + i / n) >> 1
-    val one = BigInt(1)
-    val n = one
-    val n1 = next(n, number)
-    def sqrtHelper(n: BigInt, n1: BigInt): BigInt = if ((n1 - n).abs <= one) List(n1, n).max else sqrtHelper(n1, next(n1, number))
-    sqrtHelper(n, n1)
-  }
-
-  def sqrt(number: Long): Long =
-    sqrt(BigInt(number)).longValue()
-
-  def primeDecompose(number: Long): Seq[Long] =
-    primeDecompose(number, sqrt(number) + 1)
-
-  @tailrec
-  private def primeDecompose(number: Long, limit: Long, current: Seq[Long] = Seq.empty, start: Long = 2, primes: Iterator[Long] = primeGenerator): Seq[Long] = {
-
-    if (limit < start) { // the rest is prime
-      if (number != 1)
-        current :+ number
-      else
-        current
-    } else {
-      val div = number / start
-      val rem = number - (start * div)
-      if (rem == 0) {
-        // 
-        val limit = sqrt(div) + 1
-        primeDecompose(div, limit, current :+ start, start, primes)
-      } else {
-        primeDecompose(number, limit, current, primes.next(), primes)
-      }
-    }
-  }
-
-  def isPrime(in: Long) =
-    in > 1 && primeDecompose(in).last == in
 
   val ZERO = BigInt(0)
   val ONE = BigInt(1)
