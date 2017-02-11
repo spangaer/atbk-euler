@@ -88,8 +88,8 @@ object P0054 {
       }
     }
 
-    val ordering = Ordering.by[CardValue, Value](_.asInstanceOf[Value])
-    val seqSordering = Ordering.Implicits.seqDerivedOrdering[Seq, CardValue](ordering)
+    implicit val ordering = Ordering.by[CardValue, Value](_.asInstanceOf[Value])
+    val seqSordering = Ordering.Implicits.seqDerivedOrdering[Seq, CardValue]
 
     def withNameAsCardValue(s: String): CardValue = super.withName(s).asInstanceOf[CardValue]
 
