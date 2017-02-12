@@ -94,12 +94,6 @@ class Fraction private[Fraction] (val numerator: BigInt, val denominator: BigInt
    */
   def signum: Int = numerator.signum
 
-  /**
-   * Converts this BigInt to a <tt>char</tt>.
-   *  If the BigInt is too big to fit in a char, only the low-order 16 bits are returned.
-   *  Note that this conversion can lose information about the overall magnitude of the
-   *  BigInt value and that it always returns a positive result.
-   */
   def charValue = intValue.toChar
 
   override def toString(): String = s"$numerator/$denominator"
